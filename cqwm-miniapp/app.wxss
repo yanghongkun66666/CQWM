@@ -1,0 +1,6 @@
+/** Global styles placeholder for CQWM mini program */
+page {
+  background-color: #f7f7f7;
+  min-height: 100%;
+  font-size: 28rpx;
+}

@@ -1,0 +1,15 @@
+{
+  "description": "CQWM user ordering mini program workspace",
+  "miniprogramRoot": "./",
+  "compileType": "miniprogram",
+  "setting": {
+    "urlCheck": true,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true
+  },
+  "appid": "YOUR_APPID_HERE",
+  "projectname": "cqwm-miniapp",
+  "condition": {}
+}

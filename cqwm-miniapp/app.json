@@ -1,0 +1,20 @@
+{
+  "pages": [
+    "pages/login/index",
+    "pages/store-list/index",
+    "pages/store-detail/index",
+    "pages/menu/index",
+    "pages/cart/index",
+    "pages/order-confirm/index",
+    "pages/order-list/index",
+    "pages/order-detail/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "CQWM 点单",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "backgroundTextStyle": "light"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
