@@ -23,12 +23,11 @@ src/main/java/com/kkWithCodex/cqwm
 └── integration/                   # 第三方服务（短信、地图、风控…）
 ```
 
-Every domain module already contains empty `controller`, `service`, `repository`, `model`, `dto` sub-packages with a `package-info.java` so you can drop implementations straight in following the layered architecture.
+Every module can follow the conventional `controller` → `service` → `mapper` layering used by the new `auth` implementation (MyBatis + XML mappers under `src/main/resources/mappers`).
 
 ## Development checklist
 
-1. Update `pom.xml` dependencies (Spring Web, Validation, Data JPA/MyBatis, Security, Lombok, etc.).
-2. Wire the database connection in `src/main/resources/application-*.yml`.
-3. Implement `common.exception` → global `@ControllerAdvice`.
-4. Implement the `auth` login flow (username/password or SMS + JWT).
-5. Expand modules incrementally and cover them with unit/integration tests under `src/test/java`.
+1. Configure database credentials in `src/main/resources/application.yml` (MySQL runtime) and reuse the seed SQL in `docs/db/admin_login.sql`.
+2. Run `mvn test` to execute the context-load test (H2 in-memory datasource with JWT defaults).
+3. `POST /api/v1/admin/auth/login` returns a JWT + admin profile；see `docs/login-feature.md` for the payload specification.
+4. When adding new modules, reuse the shared `ApiResponse` + `ErrorCode` + `BusinessException` pattern to keep responses consistent.

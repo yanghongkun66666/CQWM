@@ -1,25 +1,30 @@
 # CQWM Admin Web
 
-This package hosts the merchant-facing management console built with Vue 3 + Vite (TypeScript first).  
-No implementation code yet—just the agreed scaffold so every module has a clear home when development starts.
+Vue 3 + TypeScript SPA that powers the merchant-facing console.  
+The initial iteration focuses on the登录页面 which talks to `/api/v1/admin/auth/login`.
 
-```
-cqwm-admin-web
-├── public/                # Static assets served as-is by Vite
-├── src/
-│   ├── assets/            # Global styles, icons
-│   ├── components/        # Reusable UI components
-│   ├── layouts/           # Shell layouts (header/sidebar)
-│   ├── pages/             # Concrete route pages (menu, orders, marketing…)
-│   ├── router/            # Route defs, guards
-│   ├── services/          # API clients (Axios instances per domain)
-│   ├── store/             # Pinia stores / global state
-│   └── utils/             # Cross-cutting helpers
-└── package.json           # (to be generated once we run `npm create vite@latest`)
+## Available scripts
+
+```bash
+npm install          # install dependencies
+npm run dev          # start Vite dev server (http://localhost:5173)
+npm run build        # production build
+npm run preview      # preview the production build locally
 ```
 
-### Suggested next steps
+## Environment variables
 
-1. From repo root run `cd cqwm-admin-web && npm create vite@latest . -- --template vue-ts`.
-2. Replace the generated directories with the placeholders above where appropriate.
-3. Keep environment variables (API base URLs, feature flags) under `.env.local` per deployment target.
+- `.env.development` → `VITE_API_BASE_URL=http://localhost:8080`
+- `.env.production` → change to your deployed backend gateway.
+
+During dev the Vite proxy in `vite.config.ts` also forwards `/api` calls to `localhost:8080`, so you can keep the backend running locally without CORS issues.
+
+## Login page structure
+
+- `src/pages/LoginPage.vue` — UI + form validation + state hints.
+- `src/services/http.ts` — Axios instance with base URL + token header.
+- `src/services/auth.ts` — Login API wrapper returning the typed payload from the backend.
+- `src/store/auth.ts` — Pinia store that keeps the JWT + user profile in `localStorage`.
+- `src/router/index.ts` — Currently exposes `/login`, ready to expand with dashboard routes.
+
+The stored JWT uses the key `cqwm_admin_token`, so the backend can later verify the token via the Authorization header automatically inserted by `http.ts`.

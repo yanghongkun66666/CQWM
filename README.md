@@ -44,9 +44,15 @@ CQWM/
    - 每次上线在 `master` 打 `git tag vX.Y.Z`，记录变更日志。  
    - 部署使用对应 tag 或 commit，保证可追溯。
 
+## 当前功能里程碑
+
+- `feature/admin-login` 分支实现了商家后台登录（前后端 + SQL）：详见 `docs/login-feature.md`。
+- 后端：`POST /api/v1/admin/auth/login`，JWT 鉴权骨架 + 异常处理。
+- 前端：`cqwm-admin-web` 已搭建成 Vue 3 + Pinia + Axios 工程，并完成登录页。
+
 ## 下一步建议
 
-1. 在 `cqwm-admin-web` 目录执行 `npm create vite@latest` 初始化项目骨架。  
-2. 在 `cqwm-miniapp` 内用微信开发者工具导入，并补齐页面文件。  
-3. 依照 `cqwm-backend` 的包结构逐步实现 `common`、`auth` 等核心模块。  
-4. 配置 CI（GitHub Actions）以自动化构建/测试 3 个子项目。
+1. 在 `cqwm-miniapp` 内用微信开发者工具导入，并补齐页面文件。  
+2. 接入统一权限校验（JWT Filter/Interceptor），并逐步拆解菜单、订单等模块。  
+3. 配置 CI（GitHub Actions）以自动化构建/测试 3 个子项目。  
+4. 规划部署（数据库、后端、前端静态资源、小程序域名备案）。

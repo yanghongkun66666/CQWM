@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: CQWM
+  datasource:
+    url: jdbc:mysql://localhost:3306/cqwm?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8
+    username: root
+    password: 200143
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:/mappers/**/*.xml
+  type-aliases-package: com.kkWithCodex.cqwm.auth.model
+  configuration:
+    map-underscore-to-camel-case: true
+
+security:
+  jwt:
+    secret: cqwmAdminSecretChangeMecqwmAdminSecretChangeMecqwmAdminSecretChangeMe
+    expiration: 864000000
+    issuer: CQWM-Admin
