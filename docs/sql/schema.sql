@@ -1,10 +1,12 @@
--- CQWM admin login schema & seed data
+-- CQWM unified schema & seeds
 CREATE DATABASE IF NOT EXISTS `cqwm`
     DEFAULT CHARACTER SET utf8mb4
     COLLATE utf8mb4_general_ci;
 
 USE `cqwm`;
 
+-- Admin users
+DROP TABLE IF EXISTS `cqwm_admin_user`;
 CREATE TABLE IF NOT EXISTS `cqwm_admin_user`
 (
     `id`             BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -36,3 +38,26 @@ VALUES ('admin',
         NOW(),
         NOW())
 ON DUPLICATE KEY UPDATE username = VALUES(`username`);
+
+-- Employee
+DROP TABLE IF EXISTS `cqwm_employee`;
+CREATE TABLE IF NOT EXISTS `cqwm_employee`
+(
+    `id`              BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name`            VARCHAR(50)     NOT NULL,
+    `username`        VARCHAR(50)     NOT NULL,
+    `password_hash`   VARCHAR(100)    NOT NULL,
+    `phone`           VARCHAR(20)              DEFAULT NULL,
+    `gender`          VARCHAR(10)              DEFAULT NULL,
+    `id_number`       VARCHAR(30)              DEFAULT NULL,
+    `status`          VARCHAR(16)     NOT NULL DEFAULT 'ENABLED',
+    `last_operate_at` DATETIME                 DEFAULT NULL,
+    `created_by`      VARCHAR(64)              DEFAULT NULL,
+    `created_at`      DATETIME         NOT NULL,
+    `updated_at`      DATETIME         NOT NULL,
+    `is_deleted`      TINYINT(1)      NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_employee_username` (`username`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_general_ci;

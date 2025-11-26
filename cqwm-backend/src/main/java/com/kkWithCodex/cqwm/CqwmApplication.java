@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.kkWithCodex.cqwm.auth.repository")
+@MapperScan({"com.kkWithCodex.cqwm.auth.repository", "com.kkWithCodex.cqwm.employee.repository"})
 public class CqwmApplication {
 
     public static void main(String[] args) {

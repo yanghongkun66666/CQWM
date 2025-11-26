@@ -10,13 +10,13 @@
         <span class="status">营业中</span>
       </div>
       <nav class="menu">
-        <a class="menu-item active">🏠 工作台</a>
-        <a class="menu-item">📊 数据统计</a>
-        <a class="menu-item">🧾 订单管理</a>
-        <a class="menu-item">🍱 套餐管理</a>
-        <a class="menu-item">🍲 菜品管理</a>
-        <a class="menu-item">🧩 分类管理</a>
-        <a class="menu-item">👥 员工管理</a>
+        <RouterLink class="menu-item" :class="{ active: isActive('/dashboard') }" to="/dashboard">🏠 工作台</RouterLink>
+        <div class="menu-item disabled">📊 数据统计</div>
+        <div class="menu-item disabled">🧾 订单管理</div>
+        <div class="menu-item disabled">🍱 套餐管理</div>
+        <div class="menu-item disabled">🍲 菜品管理</div>
+        <div class="menu-item disabled">🧩 分类管理</div>
+        <RouterLink class="menu-item" :class="{ active: isActive('/employees') }" to="/employees">👥 员工管理</RouterLink>
       </nav>
     </aside>
     <main class="main">
@@ -48,11 +48,12 @@
 <script setup lang="ts">
 import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
 import { useAuthStore } from '@/store/auth'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute, RouterLink } from 'vue-router'
 import { logout } from '@/services/auth'
 
 const authStore = useAuthStore()
 const router = useRouter()
+const route = useRoute()
 const menuOpen = ref(false)
 const displayName = computed(() => authStore.profile?.fullName || authStore.profile?.username || '管理员')
 
@@ -81,6 +82,8 @@ const handleLogout = async () => {
 
 onMounted(() => document.addEventListener('click', handleClickOutside))
 onBeforeUnmount(() => document.removeEventListener('click', handleClickOutside))
+
+const isActive = (path: string) => route.path.startsWith(path)
 </script>
 
 <style scoped>

@@ -36,7 +36,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(registry -> registry
-                        .requestMatchers("/api/v1/admin/auth/login", "/api/v1/admin/auth/logout").permitAll()
+                        .requestMatchers("/admin/api/v1/auth/login", "/admin/api/v1/auth/logout").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .formLogin(form -> form.disable())

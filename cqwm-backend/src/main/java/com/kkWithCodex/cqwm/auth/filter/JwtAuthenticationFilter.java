@@ -1,6 +1,7 @@
 package com.kkWithCodex.cqwm.auth.filter;
 
 import com.kkWithCodex.cqwm.auth.service.JwtTokenProvider;
+import com.kkWithCodex.cqwm.common.util.CurrentUserContext;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
@@ -50,11 +51,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     new UsernamePasswordAuthenticationToken(username, null, Collections.emptyList());
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            CurrentUserContext.setUsername(username);
         } catch (JwtException | IllegalArgumentException ex) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
 
-        filterChain.doFilter(request, response);
+        try {
+            filterChain.doFilter(request, response);
+        } finally {
+            CurrentUserContext.clear();
+        }
     }
 }

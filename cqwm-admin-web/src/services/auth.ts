@@ -24,7 +24,7 @@ export interface LoginResult {
 
 export async function login(payload: LoginPayload) {
   const { data } = await httpClient.post<ApiResponse<LoginResult>>(
-    '/api/v1/admin/auth/login',
+    '/api/v1/auth/login',
     payload,
   )
   if (!data.success) {
@@ -35,5 +35,5 @@ export async function login(payload: LoginPayload) {
 
 export async function logout() {
   // Stateless; backend simply returns success. Client clears session afterward.
-  await httpClient.post<ApiResponse<void>>('/api/v1/admin/auth/logout')
+  await httpClient.post<ApiResponse<void>>('/api/v1/auth/logout')
 }

@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import type { RouteRecordRaw } from 'vue-router';
 import LoginPage from '@/pages/LoginPage.vue';
 import DashboardPage from '@/pages/DashboardPage.vue';
+import EmployeePage from '@/pages/EmployeePage.vue';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -18,6 +19,12 @@ const routes: RouteRecordRaw[] = [
     path: '/dashboard',
     name: 'dashboard',
     component: DashboardPage,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/employees',
+    name: 'employees',
+    component: EmployeePage,
     meta: { requiresAuth: true },
   },
 ];
