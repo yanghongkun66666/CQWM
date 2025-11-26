@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kkWithCodex.cqwm.employee.repository.EmployeeMapper">
+
+    <resultMap id="EmployeeResultMap" type="com.kkWithCodex.cqwm.employee.model.Employee">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="username" column="username"/>
+        <result property="phone" column="phone"/>
+        <result property="gender" column="gender"/>
+        <result property="idNumber" column="id_number"/>
+        <result property="status" column="status"/>
+        <result property="lastOperateAt" column="last_operate_at"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+        <result property="deleted" column="is_deleted"/>
+    </resultMap>
+
+    <sql id="BaseColumns">
+        id, name, username, password_hash, phone, gender, id_number, status, last_operate_at, created_by, created_at, updated_at, is_deleted
+    </sql>
+
+    <insert id="insert" parameterType="com.kkWithCodex.cqwm.employee.model.Employee" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO cqwm_employee
+        (name, username, password_hash, phone, gender, id_number, status, last_operate_at, created_by, created_at, updated_at, is_deleted)
+        VALUES (#{name}, #{username}, #{passwordHash}, #{phone}, #{gender}, #{idNumber}, #{status}, #{lastOperateAt}, #{createdBy}, #{createdAt}, #{updatedAt}, #{deleted})
+    </insert>
+
+    <update id="update" parameterType="com.kkWithCodex.cqwm.employee.model.Employee">
+        UPDATE cqwm_employee
+        SET name = #{name},
+            username = #{username},
+            phone = #{phone},
+            gender = #{gender},
+            id_number = #{idNumber},
+            status = #{status},
+            last_operate_at = #{lastOperateAt},
+            updated_at = #{updatedAt}
+        WHERE id = #{id} AND is_deleted = 0
+    </update>
+
+    <update id="updateStatus">
+        UPDATE cqwm_employee
+        SET status = #{status},
+            last_operate_at = #{lastOperateAt},
+            updated_at = #{lastOperateAt}
+        WHERE id = #{id} AND is_deleted = 0
+    </update>
+
+    <select id="findById" resultMap="EmployeeResultMap">
+        SELECT <include refid="BaseColumns"/>
+        FROM cqwm_employee
+        WHERE id = #{id} AND is_deleted = 0
+        LIMIT 1
+    </select>
+
+    <select id="findByUsername" resultMap="EmployeeResultMap">
+        SELECT <include refid="BaseColumns"/>
+        FROM cqwm_employee
+        WHERE username = #{username} AND is_deleted = 0
+        LIMIT 1
+    </select>
+
+    <select id="findPageByName" resultMap="EmployeeResultMap">
+        SELECT <include refid="BaseColumns"/>
+        FROM cqwm_employee
+        <where>
+            is_deleted = 0
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+        ORDER BY updated_at DESC
+    </select>
+</mapper>

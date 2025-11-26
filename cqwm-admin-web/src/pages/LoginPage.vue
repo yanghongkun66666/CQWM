@@ -11,8 +11,8 @@ const errorMessage = ref('')
 const successMessage = ref('')
 
 const form = reactive<LoginPayload>({
-  username: '',
-  password: '',
+  username: 'admin',
+  password: 'Admin@123',
   rememberMe: true,
 })
 
